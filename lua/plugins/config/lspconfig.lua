@@ -1,7 +1,7 @@
 local plugin = {
 	"neovim/nvim-lspconfig",
 	config = function()
-		local lspconfig = require("lspconfig")
+		local lspconfig = require "lspconfig"
 
 		lspconfig.tsserver.setup {}
 		lspconfig.eslint.setup {}
@@ -9,11 +9,12 @@ local plugin = {
 		lspconfig.pyright.setup {}
 		lspconfig.dockerls.setup {}
 		lspconfig.docker_compose_language_service.setup {}
-		lspconfig.lua_ls.setup({
+		lspconfig.lua_ls.setup {
 			settings = {
 				Lua = {
 					diagnostics = {
 						globals = { "vim" },
+						disable = { "missing-fields" },
 					},
 					workspace = {
 						library = {
@@ -25,14 +26,23 @@ local plugin = {
 					},
 				},
 			},
-		})
-	end
+		}
+	end,
 }
 
 local keymap = {
-	["<leader>gd"] = { "<cmd> lua vim.lsp.buf.definition()<CR>", "Go to definition" },
-	["<leader>gr"] = { "<cmd> lua vim.lsp.buf.references()<CR>", "Go to references" },
-	["<leader>gi"] = { "<cmd> lua vim.lsp.buf.implementation()<CR>", "Go to implementation" },
+	["<leader>gd"] = {
+		"<cmd> lua vim.lsp.buf.definition()<CR>",
+		"Go to definition",
+	},
+	["<leader>gr"] = {
+		"<cmd> lua vim.lsp.buf.references()<CR>",
+		"Go to references",
+	},
+	["<leader>gi"] = {
+		"<cmd> lua vim.lsp.buf.implementation()<CR>",
+		"Go to implementation",
+	},
 	["<leader>gh"] = { "<cmd> lua vim.lsp.buf.hover()<CR>", "Show hover" },
 	["<leader>ca"] = { "<cmd> lua vim.lsp.buf.code_action()<CR>", "Code action" },
 	["<leader>rn"] = { "<cmd> lua vim.lsp.buf.rename()<CR>", "Rename" },
